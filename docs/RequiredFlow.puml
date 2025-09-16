@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+title "Expected Execution Flow: Line by Line processing"
+
+start
+:Main...stream().map(aStreamFilter::filter);
+
+:StreamFilter.filter(line);
+if (Line of Log?) is (yes) then
+  :processLogOfLine(line);
+  :checkFilterMatch(HashSet<String> lineSet);
+  :filters.values.parallelStream()...;
+else if (Query Filter?) is (yes) then
+  :processFilter(line);
+  :filters.add(...);
+  note right
+  Add new Filter
+  end note
+else (false)
+    :return response;
+  note right
+  Response is NULL
+  end note
+endif
+
+if (response is not NULL?) is (yes) then
+  :System.out.println(response);
+else (no)
+  :false;
+endif
+
+stop
+
+@enduml

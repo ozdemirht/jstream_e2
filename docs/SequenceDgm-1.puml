@@ -1,0 +1,12 @@
+@startuml
+
+Main -> StreamFilter: filter(line)
+alt Filter Line
+StreamFilter -> StreamFilter: processFilter(line)
+else Line of Log
+StreamFilter -> StreamFilter: processLogOfLine(line)
+StreamFilter -> StreamFilter: checkFilterMatch(line)
+end
+StreamFilter -> Main: Response
+
+@enduml
